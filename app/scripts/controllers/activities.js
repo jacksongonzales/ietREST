@@ -11,7 +11,7 @@
 var app = angular.module('ietRestApp');
 var activitiesArr = [];
 
-app.controller('ActivitiesCtrl', ['$scope', '$interval', 'getData', function ($scope, $interval, getData) {
+app.controller('ActivitiesCtrl', ['$scope', '$timeout', 'getData', function ($scope, $timeout, getData) {
   var fetchWeather = function() {
     getData.getWeather().then(function(data) {
       var city = data.city.name;
@@ -45,9 +45,9 @@ app.controller('ActivitiesCtrl', ['$scope', '$interval', 'getData', function ($s
             activitiesArr.push(activity);
           }
       }
-      console.log(activitiesArr);
     });
   };
+  $scope.weatherData = activitiesArr;
 
   var isDuplicate = function (currId) {
     if (activitiesArr.length == 0)
@@ -62,7 +62,18 @@ app.controller('ActivitiesCtrl', ['$scope', '$interval', 'getData', function ($s
     return false;
   }
 
+  var currentTime = new Date();
+
+  $scope.activityAge = function() {
+    return moment(currentTime).fromNow();
+  }
+
+  var fireRequest = function() {
+    $timeout(function() {
+      fireRequest();
+    }, 5000);
+  };
+
+  fireRequest();
   fetchWeather();
-  $interval(fetchWeather, 10000);
-  $scope.weatherData = activitiesArr;
 }]);

@@ -4,11 +4,11 @@
   <md-content>
     <md-list flex>
       <md-list-item class="md-3-line" ng-repeat="x in weatherData" ng-click="null">
-        <div class="md-list-item-text" layout="column">
+        <div class="md-list-item-text activityItem" layout="column">
           <h3>{{ x.activity.title + ' ' + x.activity.actor.cityName + ' is:' }}</h3>
-          <p>{{ x.activity.object.temp + ', ' + x.activity.object.description }}</p>
+          <p>{{ x.activity.object.temp + ' kelvin, ' + x.activity.object.description }}</p>
+          <small>{{ activityAge() }}</small>
         </div>
-        <small>{{ x.activity.published }}</small>
       </md-list-item>
     </md-list>
   </md-content>
